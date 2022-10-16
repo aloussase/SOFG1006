@@ -1,0 +1,21 @@
+{
+  "name": "proyecto01",
+  "version": "1.0.0",
+  "description": "Primer proyecto de la materia \"Desarrollo de Aplicaciones Web y Moviles\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "python3 -m http.server 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aloussase/SOFG1006.git"
+  },
+  "author": "Alexander Goussas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aloussase/SOFG1006/issues"
+  },
+  "homepage": "https://github.com/aloussase/SOFG1006#readme",
+  "dependencies": {
+  }
+}
