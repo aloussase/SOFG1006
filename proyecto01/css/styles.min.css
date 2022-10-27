@@ -1,0 +1,47 @@
+@media screen and (max-width: 480px) {
+  main {
+    width: 90%;
+    margin: auto;
+  }
+
+  section { margin-bottom: 3rem; }
+
+  nav { display: none; }
+
+  #hamburger {
+    display: block;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    transition: all 0.5s;
+  }
+
+  #hamburger:hover {
+    transform: rotate(90deg);
+  }
+
+  #about-content { margin-top: 0; }
+  #about img {
+    height: 250px;
+    margin-bottom: 1rem;
+  }
+
+  #skills > div { flex-direction: column; }
+  #skills article { max-width: 100%; }
+
+  #contact form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  #contact aside { display: none; }
+
+  footer > div { padding: 0.5rem 0rem; }
+  footer hr { display: none; }
+  #footer-meta > span:last-child { font-size: 0.5rem; }
+  #footer-meta .footer-data { font-size: 0.8rem; }
+  footer { text-align: center; }
+  #footer-map { display: none; }
+}

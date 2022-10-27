@@ -18,6 +18,8 @@ body {
   font-family: "Ubuntu", sans-serif;
 }
 
+ul { list-style: none; }
+
 main {
   width: 60%;
   margin: auto;
@@ -50,8 +52,12 @@ nav ul li a {
   color: var(--fg-primary);
 }
 
+#hamburger {
+  display: none;
+}
+
 section {
-  min-height: 100vh;
+  margin-bottom: 7rem;
 }
 
 section h2 {
@@ -113,11 +119,12 @@ section h2 {
 #skills article {
   background-color: var(--dark-primary);
   color: var(--bg-primary);
-  padding: 1.5rem;
+  padding: 2rem;
   margin: 0.5rem;
-  max-width: 30%;
+  max-width: 31%;
   border-radius: 5px;
   overflow-wrap: break-word;
+  word-break: break-all;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -149,15 +156,45 @@ section h2 {
 /* Contact section */
 #contact {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+#contact h2 { margin-bottom: 0.5rem; }
 
 #contact form {
   display: grid;
-  margin: auto;
-  width: 80%;
   grid-template-columns: min-content 1fr;
   column-gap: 0.5rem;
   row-gap: 1rem;
+  align-self: stretch;
+}
+
+#social-links {
+  margin: 1rem 0;
+}
+
+#social-links ul {
+  display: flex;
+}
+
+#social-links ul li {
+  margin: 0 1rem;
+}
+
+#social-links a {
+  color: var(--dark-primary);
+  font-size: 2.5rem;
+}
+
+#social-links li {
+  transition: all 0.7s;
+}
+
+#social-links li:hover {
+  transform: rotate(45deg);
 }
 
 #contact form label {
@@ -183,16 +220,6 @@ section h2 {
 
 #contact form input[type="submit"]:hover {
   filter: brightness(105%);
-}
-
-#contact aside ul {
-  list-style: none;
-}
-
-#contact aside {
-  position: absolute;
-  right: 0;
-  top: 50%;
 }
 
 /* Footer */
