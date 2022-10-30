@@ -18,7 +18,9 @@ body {
   font-family: "Ubuntu", sans-serif;
 }
 
-ul { list-style: none; }
+ul {
+  list-style: none;
+}
 
 main {
   width: 60%;
@@ -77,6 +79,10 @@ section h2 {
 
 #about img {
   height: 400px;
+  margin-bottom: 2rem;
+}
+
+#about audio {
   margin-bottom: 2rem;
 }
 
@@ -162,7 +168,9 @@ section h2 {
   align-items: center;
 }
 
-#contact h2 { margin-bottom: 0.5rem; }
+#contact h2 {
+  margin-bottom: 0.5rem;
+}
 
 #contact form {
   display: grid;
@@ -243,12 +251,14 @@ footer hr {
   min-width: 40%;
 }
 
-.footer-data {
+table tr td {
   font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: 0.1rem;
+}
+
+table tr td > * {
+  padding: 1rem 0rem;
+  padding-right: 1rem;
 }
 
 .footer-data i {

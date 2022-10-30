@@ -4,9 +4,13 @@
     margin: auto;
   }
 
-  section { margin-bottom: 3rem; }
+  section {
+    margin-bottom: 3rem;
+  }
 
-  nav { display: none; }
+  nav {
+    display: none;
+  }
 
   #hamburger {
     display: block;
@@ -21,14 +25,24 @@
     transform: rotate(90deg);
   }
 
-  #about-content { margin-top: 0; }
+  #about-content {
+    margin-top: 0;
+  }
   #about img {
     height: 250px;
     margin-bottom: 1rem;
   }
 
-  #skills > div { flex-direction: column; }
-  #skills article { max-width: 100%; }
+  #about audio {
+    display: none;
+  }
+
+  #skills > div {
+    flex-direction: column;
+  }
+  #skills article {
+    max-width: 100%;
+  }
 
   #contact form {
     width: 100%;
@@ -36,12 +50,26 @@
     flex-direction: column;
     flex-wrap: wrap;
   }
-  #contact aside { display: none; }
+  #contact aside {
+    display: none;
+  }
 
-  footer > div { padding: 0.5rem 0rem; }
-  footer hr { display: none; }
-  #footer-meta > span:last-child { font-size: 0.5rem; }
-  #footer-meta .footer-data { font-size: 0.8rem; }
-  footer { text-align: center; }
-  #footer-map { display: none; }
+  footer > div {
+    padding: 0.5rem 0rem;
+  }
+  footer hr {
+    display: none;
+  }
+  #footer-meta > span:last-child {
+    font-size: 0.8rem;
+  }
+  footer table tr td > * {
+    font-size: 1rem;
+  }
+  footer {
+    text-align: center;
+  }
+  #footer-map {
+    display: none;
+  }
 }
