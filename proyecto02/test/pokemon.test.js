@@ -8,6 +8,7 @@ import createStat from "../src/domain/PokemonStat";
 const testPkmn = {
   id: 1,
   species: "bulbasaur",
+  types: ["grass", "poison"],
   healthPoints: 100,
   attack: 100,
   defense: 100,
@@ -68,5 +69,25 @@ describe("The Pokemon aggregate", () => {
         })
       )
     ).toThrowError();
+  });
+
+  it("Throws an exception when given a string as a type", () => {
+    expect(() => {
+      createPkmn(
+        withProps({
+          types: "grass",
+        })
+      );
+    }).toThrowError();
+  });
+
+  it("Throws an exception when given an array of a string and a number", () => {
+    expect(() => {
+      createPkmn(
+        withProps({
+          types: ["grass", 5],
+        })
+      );
+    }).toThrowError();
   });
 });

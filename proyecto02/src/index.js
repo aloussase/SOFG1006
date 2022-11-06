@@ -1,4 +1,4 @@
-import PokemonApiService from "./infrastructure/PokemonApiService";
+import PokemonApiService from "./infrastructure/PokemonApiService.js";
 
 const service = new PokemonApiService();
 

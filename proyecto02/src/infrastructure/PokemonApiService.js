@@ -1,46 +1,119 @@
 import * as _ from "lodash";
-import IllegalArgumentException from "../domain/common/IllegalArgumentException";
+import * as immutable from "immutable";
 
+import { TOTAL_PKMN } from "../domain/common/constants";
+import IllegalArgumentException from "../domain/common/IllegalArgumentException";
+import createPkmn from "../domain/Pokemon";
 import PokemonService from "../domain/PokemonService";
 
+/**
+ * Contains information need to retrieve data for a specific pokemon.
+ */
+class PokemonInfoEndpoint {
+  constructor(name, url) {
+    this.name = name;
+    this.url = url;
+  }
+
+  /**
+   * Make a request to the pokemon api to fetch information for the corresponding pokemon.
+   *
+   * @returns The pokemon corresponding to this endpoint.
+   */
+  async getPokemon() {
+    const resp = await fetch(this.url);
+
+    if (!resp.ok) {
+      throw Error(`Failed to fetch data for pokemon: ${this.name}`);
+    }
+
+    const { id, name: species, stats: sts, types: ts } = await resp.json();
+
+    // Map each type object to its name.
+    const types = _.map(ts, _.partial(_.get, _, ["type", "name"]));
+
+    // Map the array of stats to a map from the stat name to the base stat.
+    const stats = _.reduce(
+      sts,
+      (m, { base_stat, stat }) => m.set(stat.name, base_stat),
+      immutable.Map()
+    );
+
+    return createPkmn({
+      id,
+      species,
+      types,
+      healthPoints: stats.get("hp"),
+      attack: stats.get("attack"),
+      defense: stats.get("defense"),
+      specialAttack: stats.get("special-attack"),
+      specialDefense: stats.get("special-defense"),
+      speed: stats.get("speed"),
+    });
+  }
+
+  toString() {
+    return JSON.stringify(this);
+  }
+}
+
 export default class PokemonApiService extends PokemonService {
+  #infoEndpoints;
+  #pokemonData;
+
   constructor() {
     super();
-    this.pokemon = [];
+
+    // List of endpoints from which to get pokemon data.
+    this.#infoEndpoints = undefined;
+
+    // Map from pokemon id to their corresponding data.
+    this.#pokemonData = new Map();
+  }
+
+  async #getInfoEndpoints() {
+    return fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${TOTAL_PKMN}`)
+      .then((resp) => resp.json())
+      .then(({ results }) =>
+        immutable.List(
+          _.map(results, ({ name, url }) => new PokemonInfoEndpoint(name, url))
+        )
+      );
   }
 
   async findAll(o) {
-    o = o ?? {};
-    const offset = o.offset ?? 0;
-    const limit = o.limit ?? 20;
+    const offset = o?.offset ?? 0;
+    const limit = o?.limit ?? 20;
 
     if (!_.isNumber(offset)) {
       throw new IllegalArgumentException(
-        `Expect offset to be a number but got: ${typeof offset}`
+        `Expected offset to be a number but got: ${typeof offset}`
       );
     }
 
     if (!_.isNumber(limit)) {
       throw new IllegalArgumentException(
-        `Expect limit to be a number but got: ${typeof limit}`
+        `Expected limit to be a number but got: ${typeof limit}`
       );
     }
 
-    if (offset < this.pokemon.length && limit < this.pokemon.length - offset) {
-      return this.pokemon.slice(offset, offset + limit + 1);
+    if (!this.#infoEndpoints) {
+      this.#infoEndpoints = await this.#getInfoEndpoints();
     }
 
-    // TODO: Calculate necessary offset to avoid asking for the same info again.
+    return immutable.List(
+      await Promise.all(
+        _.map(_.range(offset, offset + limit + 1), async (i) => {
+          if (!this.#pokemonData.has(i)) {
+            this.#pokemonData.set(
+              i,
+              await this.#infoEndpoints.get(i).getPokemon()
+            );
+          }
 
-    console.log(this.pokemon);
-    const resp = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`
+          return this.#pokemonData.get(i);
+        })
+      )
     );
-
-    // TODO: Check for errors.
-
-    this.pokemon = (await resp.json()).results;
-
-    return this.pokemon.slice(offset, offset + limit + 1);
   }
 }

@@ -1,13 +1,17 @@
 import * as _ from "lodash";
+import * as immutable from "immutable";
 
+import IllegalArgumentException from "./common/IllegalArgumentException.js";
 import createNonEmptyString from "./common/NonEmptyString.js";
 import createId from "./PokemonId.js";
 import createStat from "./PokemonStat.js";
+import createType from "./PokemonType.js";
 
 class Pokemon {
   constructor(
     id,
     species,
+    types,
     healthPoints,
     attack,
     defense,
@@ -17,6 +21,7 @@ class Pokemon {
   ) {
     this.id = id;
     this.species = species;
+    this.types = types;
     this.healthPoints = healthPoints;
     this.attack = attack;
     this.defense = defense;
@@ -35,17 +40,14 @@ class Pokemon {
   }
 
   toString() {
-    return `Pokemon{
-        id=${this.id},
-        species=${this.species},
-        stats=${_.join(_.toArray(this.getStats()))}
-    }`;
+    return `Pokemon{id=${this.id}, species=${this.species}, type=${this.type}}`;
   }
 }
 
 export default function createPkmn({
   id,
   species,
+  types,
   healthPoints,
   attack,
   defense,
@@ -53,10 +55,17 @@ export default function createPkmn({
   specialDefense,
   speed,
 }) {
+  if (!_.isArray(types)) {
+    throw new IllegalArgumentException(
+      `Expected types to be an array but got: ${typeof types}`
+    );
+  }
+
   return Object.freeze(
     new Pokemon(
       createId(id),
       createNonEmptyString(species),
+      immutable.List(_.map(types, createType)),
       createStat("hp", healthPoints),
       createStat("attack", attack),
       createStat("defense", defense),
