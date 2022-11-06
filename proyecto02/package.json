@@ -1,0 +1,19 @@
+{
+  "name": "proyecto02",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vite": "^3.2.0",
+    "vitest": "^0.24.5"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
