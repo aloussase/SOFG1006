@@ -9,6 +9,7 @@ const testPkmn = {
   id: 1,
   species: "bulbasaur",
   types: ["grass", "poison"],
+  imageUrl: "http://example.com",
   healthPoints: 100,
   attack: 100,
   defense: 100,

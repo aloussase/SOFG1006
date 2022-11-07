@@ -1,12 +1,18 @@
 import * as _ from "lodash";
 
 export default class PokemonCard extends HTMLElement {
-  constructor(attrs) {
+  #pkmn;
+
+  constructor(pkmn) {
     super();
 
-    const title = attrs?.title ?? this.getAttribute("title");
-    const text = attrs?.text ?? this.getAttribute("text");
-    const imageUrl = attrs?.image ?? this.getAttribute("image");
+    const title = pkmn?.species ?? this.getAttribute("title");
+    const text = pkmn?.species ?? this.getAttribute("text");
+    const imageUrl = pkmn?.imageUrl ?? this.getAttribute("image");
+
+    if (pkmn) {
+      this.#pkmn = pkmn;
+    }
 
     if (_.isEmpty(title)) {
       throw Error(`Expected title to be non-empty`);

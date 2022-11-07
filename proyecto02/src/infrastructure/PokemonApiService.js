@@ -27,7 +27,13 @@ class PokemonInfoEndpoint {
       throw Error(`Failed to fetch data for pokemon: ${this.name}`);
     }
 
-    const { id, name: species, stats: sts, types: ts } = await resp.json();
+    const {
+      id,
+      name: species,
+      stats: sts,
+      types: ts,
+      sprites,
+    } = await resp.json();
 
     // Map each type object to its name.
     const types = _.map(ts, _.partial(_.get, _, ["type", "name"]));
@@ -39,10 +45,17 @@ class PokemonInfoEndpoint {
       immutable.Map()
     );
 
+    const imageUrl = _.get(sprites, [
+      "other",
+      "official-artwork",
+      "front_default",
+    ]);
+
     return createPkmn({
       id,
       species,
       types,
+      imageUrl,
       healthPoints: stats.get("hp"),
       attack: stats.get("attack"),
       defense: stats.get("defense"),

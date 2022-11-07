@@ -12,6 +12,7 @@ class Pokemon {
     id,
     species,
     types,
+    imageUrl,
     healthPoints,
     attack,
     defense,
@@ -22,6 +23,7 @@ class Pokemon {
     this.id = id;
     this.species = species;
     this.types = types;
+    this.imageUrl = imageUrl;
     this.healthPoints = healthPoints;
     this.attack = attack;
     this.defense = defense;
@@ -48,6 +50,7 @@ export default function createPkmn({
   id,
   species,
   types,
+  imageUrl,
   healthPoints,
   attack,
   defense,
@@ -61,11 +64,18 @@ export default function createPkmn({
     );
   }
 
+  if (!_.isString(imageUrl)) {
+    throw new IllegalArgumentException(
+      `Expected imageUrl to be a string but got: ${typeof imageUrl}: ${imageUrl}`
+    );
+  }
+
   return Object.freeze(
     new Pokemon(
       createId(id),
       createNonEmptyString(species),
       immutable.List(_.map(types, createType)),
+      new URL(imageUrl),
       createStat("hp", healthPoints),
       createStat("attack", attack),
       createStat("defense", defense),

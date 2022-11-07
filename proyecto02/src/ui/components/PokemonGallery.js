@@ -9,14 +9,9 @@ export default class PokemonGallery extends HTMLElement {
     const div = document.createElement("div");
     div.setAttribute("class", "card-group");
 
+    // Pass through each pokemon to the card.
     items
-      .map(
-        ({ species }) =>
-          new PokemonCard({
-            title: species,
-            text: species,
-          })
-      )
+      .map((item) => new PokemonCard(item))
       .forEach((card) => div.appendChild(card));
 
     this.appendChild(div);
