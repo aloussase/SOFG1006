@@ -22,11 +22,13 @@ export default class PokemonCard extends HTMLElement {
       throw Error(`Expected text to be non-empty`);
     }
 
+    this.setAttribute("class", "w-25 p-1");
+
     const card = document.createElement("div");
     card.setAttribute("class", "card");
 
     const img = document.createElement("img");
-    img.setAttribute("class", "card-img-top");
+    img.setAttribute("class", "card-img-top img-fluid");
     img.alt = title;
 
     if (imageUrl) {
