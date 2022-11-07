@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import * as immutable from "immutable";
 
-import { TOTAL_PKMN } from "../domain/common/constants";
+import { PKMN_TOTAL } from "../domain/common/constants";
 import IllegalArgumentException from "../domain/common/IllegalArgumentException";
 import createPkmn from "../domain/Pokemon";
 import PokemonService from "../domain/PokemonService";
@@ -72,7 +72,7 @@ export default class PokemonApiService extends PokemonService {
   }
 
   async #getInfoEndpoints() {
-    return fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${TOTAL_PKMN}`)
+    return fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${PKMN_TOTAL}`)
       .then((resp) => resp.json())
       .then(({ results }) =>
         immutable.List(
@@ -101,8 +101,8 @@ export default class PokemonApiService extends PokemonService {
       this.#infoEndpoints = await this.#getInfoEndpoints();
     }
 
-    offset = Math.min(offset, TOTAL_PKMN);
-    limit = Math.min(limit, TOTAL_PKMN - offset);
+    offset = Math.min(offset, PKMN_TOTAL);
+    limit = Math.min(limit, PKMN_TOTAL - offset);
 
     return immutable.List(
       await Promise.all(

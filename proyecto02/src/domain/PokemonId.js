@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 
-import { TOTAL_PKMN } from "./common/constants.js";
+import { PKMN_TOTAL } from "./common/constants.js";
 import IllegalArgumentException from "./common/IllegalArgumentException.js";
 
 class PokemonId {
@@ -14,7 +14,7 @@ class PokemonId {
 }
 
 export default function createId(id) {
-  if (!_.isNumber(id) || id <= 0 || id > TOTAL_PKMN) {
+  if (!_.isNumber(id) || id <= 0 || id > PKMN_TOTAL) {
     throw new IllegalArgumentException(`Invalid pokemon id: ${id}`);
   }
 

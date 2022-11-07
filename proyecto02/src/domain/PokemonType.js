@@ -1,4 +1,5 @@
 import * as _ from "lodash";
+import { PKMN_TYPES } from "./common/constants.js";
 
 import IllegalArgumentException from "./common/IllegalArgumentException.js";
 
@@ -12,27 +13,6 @@ class PokemonType {
   }
 }
 
-const types = [
-  "normal",
-  "fire",
-  "water",
-  "grass",
-  "electric",
-  "ice",
-  "fighting",
-  "poison",
-  "ground",
-  "flying",
-  "psychic",
-  "bug",
-  "rock",
-  "ghost",
-  "dark",
-  "dragon",
-  "steel",
-  "fairy",
-];
-
 export default function createType(type) {
   if (!_.isString(type) || _.isEmpty(type)) {
     throw new IllegalArgumentException(
@@ -40,7 +20,7 @@ export default function createType(type) {
     );
   }
 
-  if (!_.some(types, _.partial(_.eq, type))) {
+  if (!_.some(PKMN_TYPES, _.partial(_.eq, type))) {
     throw new IllegalArgumentException(`Invalid type: ${type}`);
   }
 

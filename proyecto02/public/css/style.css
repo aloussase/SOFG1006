@@ -1,0 +1,11 @@
+.pointer {
+  cursor: pointer;
+}
+
+.hover {
+  transition: all 0.2s ease-in-out;
+}
+
+.hover-bg-light:hover {
+  background-color: rgba(225, 225, 225, 0.5);
+}
