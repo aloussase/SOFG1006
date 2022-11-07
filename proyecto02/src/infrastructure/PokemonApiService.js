@@ -82,8 +82,8 @@ export default class PokemonApiService extends PokemonService {
   }
 
   async findAll(o) {
-    const offset = o?.offset ?? 0;
-    const limit = o?.limit ?? 20;
+    let offset = o?.offset ?? 0;
+    let limit = o?.limit ?? 20;
 
     if (!_.isNumber(offset)) {
       throw new IllegalArgumentException(
@@ -100,6 +100,9 @@ export default class PokemonApiService extends PokemonService {
     if (!this.#infoEndpoints) {
       this.#infoEndpoints = await this.#getInfoEndpoints();
     }
+
+    offset = Math.min(offset, TOTAL_PKMN);
+    limit = Math.min(limit, TOTAL_PKMN - offset);
 
     return immutable.List(
       await Promise.all(
