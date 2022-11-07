@@ -46,18 +46,13 @@
           </div>
 
           <div class="row">
-            <collapsing-heading
-              class="pointer hover hover-bg-light py-2"
-              title="Filtros"
-              target="filters"
-            >
-            </collapsing-heading>
-            <div class="collapse" id="filters"></div>
+            <search-filters></search-filters>
           </div>
         </div>
 
         <div id="main" class="col bg-primary container">
           <div class="row justify-content-center">
+            <!-- Search Box -->
             <div class="col col-1"></div>
             <div class="input-group my-3 col">
               <input
@@ -77,6 +72,12 @@
               </button>
             </div>
             <div class="col col-1"></div>
+            <!-- End Search Box -->
+          </div>
+          <div class="row">
+            <!-- Pokemon Gallery -->
+            <div id="pkmn-gallery"></div>
+            <!-- End Pokemon Gallery -->
           </div>
         </div>
       </div>

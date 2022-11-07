@@ -1,27 +1,23 @@
-import { PKMN_TYPES } from "./domain/common/constants.js";
 import PokemonApiService from "./infrastructure/PokemonApiService.js";
 
-import ComboBox from "./ui/components/ComboBox.js";
+// Used in index.html
 import CollapsingHeading from "./ui/components/CollapsingHeading.js";
+import SearchFilters from "./ui/components/SearchFilters.js";
+import PokemonCard from "./ui/components/PokemonCard.js";
 
 import "./style.scss";
+import PokemonGallery from "./ui/components/PokemonGallery.js";
 
-const service = new PokemonApiService();
+async function main() {
+  const service = new PokemonApiService();
+  const pkmn = await service.findAll();
 
-const filters = document.getElementById("filters");
+  const gallery = document.getElementById("pkmn-gallery");
+  gallery.appendChild(
+    new PokemonGallery({
+      items: pkmn,
+    })
+  );
+}
 
-const types = PKMN_TYPES.unshift("all");
-
-filters.appendChild(
-  new ComboBox({
-    name: "Tipo 1",
-    items: types,
-  })
-);
-
-filters.appendChild(
-  new ComboBox({
-    name: "Tipo 2",
-    items: types,
-  })
-);
+document.addEventListener("DOMContentLoaded", main);

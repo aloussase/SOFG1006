@@ -20,8 +20,8 @@ export default function createType(type) {
     );
   }
 
-  if (!_.some(PKMN_TYPES, _.partial(_.eq, type))) {
-    throw new IllegalArgumentException(`Invalid type: ${type}`);
+  if (!PKMN_TYPES.some(_.partial(_.isEqual, type))) {
+    throw new IllegalArgumentException(`Invalid type: "${type}"`);
   }
 
   return Object.freeze(new PokemonType(type));

@@ -4,7 +4,7 @@ import * as immutable from "immutable";
 export const PKMN_TOTAL = 1154;
 
 // Current existing pokemon types.
-export const PKMN_TYPES = immutable.List([
+export const PKMN_TYPES = immutable.List.of(
   "normal",
   "fire",
   "water",
@@ -22,5 +22,5 @@ export const PKMN_TYPES = immutable.List([
   "dark",
   "dragon",
   "steel",
-  "fairy",
-]);
+  "fairy"
+);
