@@ -2,8 +2,6 @@ export default class ComboBox extends HTMLElement {
   constructor({ name, items }) {
     super();
 
-    // const shadow = this.attachShadow({ mode: "open" });
-
     const div = document.createElement("div");
     div.setAttribute("class", "mb-3");
 
@@ -29,8 +27,6 @@ export default class ComboBox extends HTMLElement {
     div.appendChild(select);
 
     this.appendChild(div);
-
-    // shadow.appendChild(div);
   }
 }
 

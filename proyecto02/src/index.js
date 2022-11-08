@@ -8,16 +8,42 @@ import PokemonCard from "./ui/components/PokemonCard.js";
 import "./style.scss";
 import PokemonGallery from "./ui/components/PokemonGallery.js";
 
-async function main() {
-  const service = new PokemonApiService();
-  const pkmn = await service.findAll();
+class UI {
+  #gallery;
+  #pkmnService;
+  #searchFilters;
 
-  const gallery = document.getElementById("pkmn-gallery");
-  gallery.appendChild(
-    new PokemonGallery({
-      items: pkmn,
-    })
-  );
+  constructor() {
+    this.#gallery = document.getElementById("pkmn-gallery");
+    this.#searchFilters = document.getElementById("search-filters");
+
+    // TODO: Request the service to apply the filters.
+    this.#searchFilters.addEventListener(
+      SearchFilters.TYPE1_FILTER_CHANGED,
+      ({ detail }) => console.log(detail)
+    );
+    this.#searchFilters.addEventListener(
+      SearchFilters.TYPE2_FILTER_CHANGED,
+      ({ detail }) => console.log(detail)
+    );
+
+    this.#pkmnService = new PokemonApiService();
+  }
+
+  async init() {
+    const pkmn = await this.#pkmnService.findAll();
+    this.#gallery.appendChild(
+      new PokemonGallery({
+        items: pkmn,
+      })
+    );
+  }
+}
+
+async function main() {
+  const ui = new UI();
+
+  await ui.init();
 }
 
 document.addEventListener("DOMContentLoaded", main);

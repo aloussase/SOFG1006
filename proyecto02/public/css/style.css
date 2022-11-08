@@ -9,3 +9,31 @@
 .hover-bg-light:hover {
   background-color: rgba(225, 225, 225, 0.5);
 }
+
+.type-grass {
+  background-color: green;
+}
+
+.type-poison {
+  background-color: purple;
+}
+
+.type-fire {
+  background-color: red;
+}
+
+.type-water {
+  background-color: aqua;
+}
+
+.type-bug {
+  background-color: olivedrab;
+}
+
+.type-flying {
+  background-color: cornflowerblue;
+}
+
+.type-normal {
+  background-color: lightsteelblue;
+}

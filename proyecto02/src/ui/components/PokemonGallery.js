@@ -7,7 +7,7 @@ export default class PokemonGallery extends HTMLElement {
     super();
 
     const div = document.createElement("div");
-    div.setAttribute("class", "card-group");
+    div.setAttribute("class", "card-group justify-content-center");
 
     // Pass through each pokemon to the card.
     items

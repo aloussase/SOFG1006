@@ -2,57 +2,70 @@ import * as _ from "lodash";
 
 export default class PokemonCard extends HTMLElement {
   #pkmn;
+  #card;
 
   constructor(pkmn) {
     super();
 
-    const title = pkmn?.species ?? this.getAttribute("title");
-    const text = pkmn?.species ?? this.getAttribute("text");
-    const imageUrl = pkmn?.imageUrl ?? this.getAttribute("image");
-
-    if (pkmn) {
-      this.#pkmn = pkmn;
+    if (!pkmn) {
+      throw Error(`Expected a valid pokemon, but got: ${pkmn}`);
     }
 
-    if (_.isEmpty(title)) {
-      throw Error(`Expected title to be non-empty`);
-    }
+    this.#pkmn = pkmn;
 
-    if (_.isEmpty(text)) {
-      throw Error(`Expected text to be non-empty`);
-    }
+    this.setAttribute("class", "p-1");
 
-    this.setAttribute("class", "w-25 p-1");
+    this.#card = this.#createCard();
+    this.appendChild(this.#card);
+  }
 
+  #createCard() {
     const card = document.createElement("div");
     card.setAttribute("class", "card");
 
     const img = document.createElement("img");
     img.setAttribute("class", "card-img-top img-fluid");
-    img.alt = title;
-
-    if (imageUrl) {
-      img.src = imageUrl;
-    }
+    img.alt = this.#pkmn.species;
+    img.src = this.#pkmn.imageUrl;
 
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
 
     const cardTitle = document.createElement("h4");
     cardTitle.setAttribute("class", "card-title");
-    cardTitle.innerText = title;
+    cardTitle.innerText = `${this.#pkmn.id}. ${_.capitalize(
+      this.#pkmn.species
+    )}`;
 
-    const cardText = document.createElement("p");
-    cardText.setAttribute("class", "card-text");
-    cardText.innerText = text;
+    const typeBadges = document.createElement("div");
+    typeBadges.setAttribute("class", "card-text");
+
+    typeBadges.appendChild(this.#makeTypeBadge(0));
+
+    if (this.#pkmn.types.count() > 1) {
+      typeBadges.appendChild(this.#makeTypeBadge(1));
+    }
 
     cardBody.appendChild(cardTitle);
-    cardBody.appendChild(cardText);
+    cardBody.appendChild(typeBadges);
 
     card.appendChild(img);
     card.appendChild(cardBody);
 
-    this.appendChild(card);
+    return card;
+  }
+
+  #makeTypeBadge(n) {
+    const typeBadge = document.createElement("span");
+
+    typeBadge.setAttribute(
+      "class",
+      `badge rounded-pill type-${this.#pkmn.types.get(n)}`
+    );
+
+    typeBadge.innerHTML = this.#pkmn.types.get(n);
+
+    return typeBadge;
   }
 }
 
