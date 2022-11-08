@@ -1,4 +1,13 @@
 export default class ComboBox extends HTMLElement {
+  #value;
+
+  /**
+   * Retrieve the currently selected value from this `ComboBox`.
+   */
+  get value() {
+    return this.#value;
+  }
+
   constructor({ name, items }) {
     super();
 
@@ -13,6 +22,8 @@ export default class ComboBox extends HTMLElement {
     const select = document.createElement("select");
     select.setAttribute("class", "form-select form-select-lg");
     select.setAttribute("name", name);
+
+    select.addEventListener("change", (e) => (this.#value = e.target.value));
 
     const options = items.map((item) => {
       const option = document.createElement("option");

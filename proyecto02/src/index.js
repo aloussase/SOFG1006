@@ -17,26 +17,26 @@ class UI {
     this.#gallery = document.getElementById("pkmn-gallery");
     this.#searchFilters = document.getElementById("search-filters");
 
-    // TODO: Request the service to apply the filters.
-    this.#searchFilters.addEventListener(
-      SearchFilters.TYPE1_FILTER_CHANGED,
-      ({ detail }) => console.log(detail)
-    );
-    this.#searchFilters.addEventListener(
-      SearchFilters.TYPE2_FILTER_CHANGED,
-      ({ detail }) => console.log(detail)
-    );
-
     this.#pkmnService = new PokemonApiService();
+
+    this.#searchFilters.addEventListener(
+      SearchFilters.TYPE_FILTER_CHANGED,
+      ({ detail: types }) => {
+        this.#pkmnService.findByType([types.type1, types.type2]);
+      }
+    );
   }
 
-  async init() {
-    const pkmn = await this.#pkmnService.findAll();
-    this.#gallery.appendChild(
+  #setPkmnList(pkmn) {
+    this.#gallery.replaceChildren(
       new PokemonGallery({
         items: pkmn,
       })
     );
+  }
+
+  async init() {
+    this.#setPkmnList(await this.#pkmnService.findAll());
   }
 }
 

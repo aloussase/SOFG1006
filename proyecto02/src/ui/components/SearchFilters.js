@@ -4,8 +4,10 @@ import ComboBox from "./ComboBox";
 import CollapsingHeading from "./CollapsingHeading";
 
 export default class SearchFilters extends HTMLElement {
-  static TYPE1_FILTER_CHANGED = "type-1-changed";
-  static TYPE2_FILTER_CHANGED = "type-2-changed";
+  static TYPE_FILTER_CHANGED = "type-filter-changed";
+
+  #type1Filter;
+  #type2Filter;
 
   constructor() {
     super();
@@ -24,16 +26,17 @@ export default class SearchFilters extends HTMLElement {
     filters.setAttribute("id", "filters");
     filters.setAttribute("class", "collapse");
 
-    const [type1Filter, type2Filter] = this.#createTypeFilters();
+    this.#type1Filter = this.#createTypeFilter("Tipo 1");
+    this.#type2Filter = this.#createTypeFilter("Tipo 2");
 
-    filters.appendChild(type1Filter);
-    filters.appendChild(type2Filter);
+    filters.appendChild(this.#type1Filter);
+    filters.appendChild(this.#type2Filter);
 
     this.appendChild(collapsingHeading);
     this.appendChild(filters);
   }
 
-  #createTypeFilter(filterName, filterEvent) {
+  #createTypeFilter(filterName) {
     const types = PKMN_TYPES.unshift("all");
 
     const typeFilter = new ComboBox({
@@ -41,27 +44,18 @@ export default class SearchFilters extends HTMLElement {
       items: types,
     });
 
-    typeFilter.addEventListener("change", (e) => {
+    typeFilter.addEventListener("change", () => {
       this.dispatchEvent(
-        new CustomEvent(filterEvent, {
-          detail: e.target.value,
+        new CustomEvent(SearchFilters.TYPE_FILTER_CHANGED, {
+          detail: {
+            type1: this.#type1Filter.value,
+            type2: this.#type2Filter.value,
+          },
         })
       );
     });
 
     return typeFilter;
-  }
-
-  #createTypeFilters() {
-    const type1Filter = this.#createTypeFilter(
-      "Tipo 1",
-      SearchFilters.TYPE1_FILTER_CHANGED
-    );
-    const type2Filter = this.#createTypeFilter(
-      "Tipo 2",
-      SearchFilters.TYPE2_FILTER_CHANGED
-    );
-    return [type1Filter, type2Filter];
   }
 }
 
