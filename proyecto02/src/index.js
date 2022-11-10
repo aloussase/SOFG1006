@@ -40,10 +40,4 @@ class UI {
   }
 }
 
-async function main() {
-  const ui = new UI();
-
-  await ui.init();
-}
-
-document.addEventListener("DOMContentLoaded", main);
+document.addEventListener("DOMContentLoaded", await new UI().init());

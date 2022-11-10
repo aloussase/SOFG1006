@@ -94,6 +94,29 @@ export default class PokemonApiService extends PokemonService {
       );
   }
 
+  async #fetchAllAsync({ offset, limit } = { offset: 0, limit: 100 }) {
+    const currentNumPkmn = this.#pokemonData.keys.length;
+    if (currentNumPkmn >= PKMN_TOTAL) {
+      return;
+    }
+
+    for (
+      let i = offset;
+      i < Math.min(offset + limit, this.#infoEndpoints.length - offset);
+      i++
+    ) {
+      if (!this.#pokemonData.has(i)) {
+        console.log(`Fetching data for pokemon: ${this.#infoEndpoints.get(i)}`);
+        this.#pokemonData.set(i, await this.#infoEndpoints.get(i).getPokemon());
+      }
+    }
+
+    setTimeout(
+      () => this.#fetchAllAsync({ offset: offset + limit, limit }),
+      1000
+    );
+  }
+
   async findAll(o) {
     let offset = o?.offset ?? 0;
     let limit = o?.limit ?? 20;
@@ -112,6 +135,7 @@ export default class PokemonApiService extends PokemonService {
 
     if (!this.#infoEndpoints) {
       this.#infoEndpoints = await this.#getInfoEndpoints();
+      this.#fetchAllAsync();
     }
 
     offset = Math.min(offset, PKMN_TOTAL);
