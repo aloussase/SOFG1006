@@ -20,6 +20,7 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.2",
     "immutable": "^4.1.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "rambda": "^7.3.0"
   }
 }

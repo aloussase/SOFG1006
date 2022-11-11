@@ -4,6 +4,7 @@ import PokemonApiService from "./infrastructure/PokemonApiService.js";
 import CollapsingHeading from "./ui/components/CollapsingHeading.js";
 import SearchFilters from "./ui/components/SearchFilters.js";
 import PokemonCard from "./ui/components/PokemonCard.js";
+import DismissableAlert from "./ui/components/Alert.js";
 
 import "./style.scss";
 import PokemonGallery from "./ui/components/PokemonGallery.js";
@@ -21,9 +22,13 @@ class UI {
 
     this.#searchFilters.addEventListener(
       SearchFilters.TYPE_FILTER_CHANGED,
-      ({ detail: types }) => {
-        this.#pkmnService.findByType([types.type1, types.type2]);
-      }
+      (e) => this.#applyTypeFilters(e)
+    );
+  }
+
+  async #applyTypeFilters({ detail: types }) {
+    this.#setPkmnList(
+      await this.#pkmnService.findByType([types.type1, types.type2])
     );
   }
 

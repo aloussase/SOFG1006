@@ -1,5 +1,6 @@
 import * as _ from "lodash";
 import * as immutable from "immutable";
+import { filter } from "rambda";
 
 import { PKMN_TOTAL } from "../domain/common/constants";
 import IllegalArgumentException from "../domain/common/IllegalArgumentException";
@@ -94,15 +95,12 @@ export default class PokemonApiService extends PokemonService {
       );
   }
 
-  async #fetchAllAsync({ offset, limit } = { offset: 0, limit: 100 }) {
-    const currentNumPkmn = this.#pokemonData.keys.length;
-    if (currentNumPkmn >= PKMN_TOTAL) {
-      return;
-    }
+  async #fetchAllAsync({ offset, limit } = { offset: 0, limit: 50 }) {
+    if (!(this.#pokemonData.keys.length < PKMN_TOTAL)) return;
 
     for (
       let i = offset;
-      i < Math.min(offset + limit, this.#infoEndpoints.length - offset);
+      i < Math.min(offset + limit, this.#infoEndpoints.count(), PKMN_TOTAL);
       i++
     ) {
       if (!this.#pokemonData.has(i)) {
@@ -119,7 +117,7 @@ export default class PokemonApiService extends PokemonService {
 
   async findAll(o) {
     let offset = o?.offset ?? 0;
-    let limit = o?.limit ?? 20;
+    let limit = o?.limit ?? 50;
 
     if (!_.isNumber(offset)) {
       throw new IllegalArgumentException(
@@ -133,7 +131,7 @@ export default class PokemonApiService extends PokemonService {
       );
     }
 
-    if (!this.#infoEndpoints) {
+    if (this.#infoEndpoints === undefined) {
       this.#infoEndpoints = await this.#getInfoEndpoints();
       this.#fetchAllAsync();
     }
@@ -150,10 +148,22 @@ export default class PokemonApiService extends PokemonService {
               await this.#infoEndpoints.get(i).getPokemon()
             );
           }
-
           return this.#pokemonData.get(i);
         })
       )
+    );
+  }
+
+  async findByType([targetType1, targetType2]) {
+    const typesMatch = (pkmnType, targetType) =>
+      targetType === undefined ||
+      targetType === "all" ||
+      pkmnType?.type === targetType;
+    return filter(
+      (pkmn) =>
+        typesMatch(pkmn.types.get(0), targetType1) &&
+        typesMatch(pkmn.types.get(1), targetType2),
+      [...this.#pokemonData.values()]
     );
   }
 }
