@@ -1,18 +1,17 @@
 export default class DismissableAlert extends HTMLElement {
   #root;
 
-  constructor() {
+  constructor(attrs) {
     super();
 
     this.#root = document.createElement("div");
     this.#root.setAttribute(
       "class",
-      "alert alert-warning alert-dismissible fade show"
+      "alert alert-info alert-dismissible fade show"
     );
     this.#root.setAttribute("role", "alert");
 
-    const message = this.getAttribute("message");
-    this.#root.innerText = message;
+    this.#root.innerText = this.getAttribute("message") ?? attrs?.message;
 
     const dismissButton = document.createElement("button");
     dismissButton.setAttribute("type", "button");

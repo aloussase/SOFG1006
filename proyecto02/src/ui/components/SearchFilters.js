@@ -48,8 +48,8 @@ export default class SearchFilters extends HTMLElement {
       this.dispatchEvent(
         new CustomEvent(SearchFilters.TYPE_FILTER_CHANGED, {
           detail: {
-            type1: this.#type1Filter.value,
-            type2: this.#type2Filter.value,
+            type1: this.#type1Filter.value ?? "all",
+            type2: this.#type2Filter.value ?? "all",
           },
         })
       );

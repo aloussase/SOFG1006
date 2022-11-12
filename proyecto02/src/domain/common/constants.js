@@ -1,7 +1,7 @@
 import * as immutable from "immutable";
 
 // The current number of existing pokemon.
-export const PKMN_TOTAL = 1154;
+export const PKMN_TOTAL = 905;
 
 // Current existing pokemon types.
 export const PKMN_TYPES = immutable.List.of(

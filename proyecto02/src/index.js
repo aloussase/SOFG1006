@@ -1,13 +1,12 @@
 import PokemonApiService from "./infrastructure/PokemonApiService.js";
 
 // Used in index.html
-import CollapsingHeading from "./ui/components/CollapsingHeading.js";
+import AsyncPokemonFetcherSubject from "./infrastructure/AsyncPokemonFetcherSubject.js";
+import DismissableAlert from "./ui/components/DismissableAlert.js";
+import PokemonGallery from "./ui/components/PokemonGallery.js";
 import SearchFilters from "./ui/components/SearchFilters.js";
-import PokemonCard from "./ui/components/PokemonCard.js";
-import DismissableAlert from "./ui/components/Alert.js";
 
 import "./style.scss";
-import PokemonGallery from "./ui/components/PokemonGallery.js";
 
 class UI {
   #gallery;
@@ -32,6 +31,17 @@ class UI {
     );
   }
 
+  onNext(msg) {
+    if (msg.event !== "completed") return;
+
+    const alertsContainer = document.getElementById("alerts-container");
+    alertsContainer.replaceChildren(
+      new DismissableAlert({
+        message: "Finished loading the Pokémon data",
+      })
+    );
+  }
+
   #setPkmnList(pkmn) {
     this.#gallery.replaceChildren(
       new PokemonGallery({
@@ -41,8 +51,17 @@ class UI {
   }
 
   async init() {
-    this.#setPkmnList(await this.#pkmnService.findAll());
+    AsyncPokemonFetcherSubject.subscribe(this);
+    AsyncPokemonFetcherSubject.subscribe(this.#pkmnService);
+    AsyncPokemonFetcherSubject.connect();
+    setTimeout(
+      async () => this.#setPkmnList(await this.#pkmnService.findAll()),
+      2000
+    );
   }
 }
 
-document.addEventListener("DOMContentLoaded", await new UI().init());
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => await new UI().init()
+);
