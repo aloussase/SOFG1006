@@ -28,23 +28,14 @@
     <header></header>
     <main>
       <div class="row min-vh-100">
-        <div class="container col col-2 border-end px-3 mh-100">
-          <div class="row">
-            <h1 class="border-bottom py-2">PokéParty!</h1>
-          </div>
-
-          <div class="row">
-            <collapsing-heading
-              class="pointer hover hover-bg-light py-2"
-              title="Mis Equipos"
-              target="teams"
-            >
-            </collapsing-heading>
-            <div id="teams" class="collapse"></div>
-          </div>
-
-          <div class="row">
-            <search-filters id="search-filters"></search-filters>
+        <div class="container col col-2 border-end mh-100">
+          <div class="position-fixed top-0 left-0 bottom-0 px-3">
+            <div class="row">
+              <h1 class="border-bottom py-2">PokéParty!</h1>
+            </div>
+            <div class="row">
+              <search-filters id="search-filters"></search-filters>
+            </div>
           </div>
         </div>
 
