@@ -12,15 +12,15 @@ export default class ComboBox extends HTMLElement {
     super();
 
     const div = document.createElement("div");
-    div.setAttribute("class", "mb-3");
+    div.setAttribute("class", "mb-3 d-flex align-items-center");
 
     const label = document.createElement("label");
     label.setAttribute("for", name);
-    label.setAttribute("class", "form-label");
-    label.innerText = name;
+    label.setAttribute("class", "form-label w-100");
+    label.textContent = name;
 
     const select = document.createElement("select");
-    select.setAttribute("class", "form-select form-select-lg");
+    select.setAttribute("class", "form-select form-select-md");
     select.setAttribute("name", name);
 
     select.addEventListener("change", (e) => (this.#value = e.target.value));
@@ -28,7 +28,7 @@ export default class ComboBox extends HTMLElement {
     const options = items.map((item) => {
       const option = document.createElement("option");
       option.setAttribute("value", item);
-      option.innerText = item;
+      option.textContent = item;
       return option;
     });
 

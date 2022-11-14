@@ -12,27 +12,18 @@ export default class SearchFilters extends HTMLElement {
   constructor() {
     super();
 
-    const collapsingHeading = new CollapsingHeading({
-      title: "Filtros",
-      target: "filters",
-    });
-
-    collapsingHeading.setAttribute(
-      "class",
-      "pointer hover hover-bg-light py-2"
-    );
-
     const filters = document.createElement("div");
     filters.setAttribute("id", "filters");
-    filters.setAttribute("class", "collapse");
+    filters.setAttribute("class", "row");
 
     this.#type1Filter = this.#createTypeFilter("Tipo 1");
+    this.#type1Filter.setAttribute("class", "col");
+
     this.#type2Filter = this.#createTypeFilter("Tipo 2");
+    this.#type2Filter.setAttribute("class", "col");
 
-    filters.appendChild(this.#type1Filter);
-    filters.appendChild(this.#type2Filter);
+    filters.append(this.#type1Filter, this.#type2Filter);
 
-    this.appendChild(collapsingHeading);
     this.appendChild(filters);
   }
 

@@ -7,7 +7,7 @@ export default class SearchBar extends HTMLElement {
 
     const input = document.createElement("input");
     input.setAttribute("type", "text");
-    input.setAttribute("class", "form-control");
+    input.setAttribute("class", "form-control p-lg-3");
     input.setAttribute("id", "search-box");
     input.setAttribute("placeholder", "Search for a Pokémon");
     input.setAttribute("aria-label", "Search for a Pokémon");

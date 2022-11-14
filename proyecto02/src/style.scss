@@ -2,3 +2,7 @@ $primary: #dc322f;
 $secondary: #333;
 
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+.topmost {
+    z-index: 2000;
+}
