@@ -5,6 +5,7 @@ import AsyncPokemonFetcherSubject from "./infrastructure/AsyncPokemonFetcherSubj
 import DismissableAlert from "./ui/components/DismissableAlert.js";
 import PokemonGallery from "./ui/components/PokemonGallery.js";
 import SearchFilters from "./ui/components/SearchFilters.js";
+import SearchBar from "./ui/components/SearchBar.js";
 
 import "./style.scss";
 

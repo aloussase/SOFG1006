@@ -35,7 +35,7 @@ export default class CollapsingHeading extends HTMLElement {
     heading.setAttribute("data-bs-toggle", "collapse");
     heading.setAttribute("data-bs-target", `#${target}`);
     heading.setAttribute("aria-controls", target);
-    heading.ariaExpanded = false;
+    heading.ariaExpanded = true;
 
     this.#icon = document.createElement("i");
     this.#icon.setAttribute("class", this.#collapsedIconClasses);

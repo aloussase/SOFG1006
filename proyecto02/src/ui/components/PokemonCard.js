@@ -13,8 +13,7 @@ export default class PokemonCard extends HTMLElement {
 
     this.#pkmn = pkmn;
 
-    this.setAttribute("class", "p-1");
-
+    this.setAttribute("class", "pb-1 pe-1");
     this.#card = this.#createCard();
     this.appendChild(this.#card);
   }
