@@ -11,12 +11,22 @@ export default class PokemonService {
   }
 
   /**
+   * Find Pokemon by their name.
+   *
+   * @param {string} name
+   * @return A list containing Pokemon that match the given name.
+   */
+  async findByName(name) {
+    throw Error("Not implemented");
+  }
+
+  /**
    * Filter pokemon by type.
    *
    * The special value "all" may be specified to mean "do not take this type into account".
    * `undefined` may be used for this purpose as well.
    *
-   * @param {*} param0 A tuple consisting of the first and second types to filter by.
+   * @param {[string, string]} param0 A tuple consisting of the first and second types to filter by.
    * @return An Observable that will emit all Pokemon that have the specified types.
    */
   async findByType([type1, type2]) {

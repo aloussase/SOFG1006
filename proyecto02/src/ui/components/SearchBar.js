@@ -1,4 +1,9 @@
 export default class SearchBar extends HTMLElement {
+  /**
+   * Event that signals that the search query has changed.
+   */
+  static SEARCH_QUERY_CHANGED = "search-query-changed";
+
   constructor() {
     super();
 
@@ -12,6 +17,16 @@ export default class SearchBar extends HTMLElement {
     input.setAttribute("placeholder", "Search for a Pokémon");
     input.setAttribute("aria-label", "Search for a Pokémon");
     input.setAttribute("aria-describedby", "search-button");
+
+    input.addEventListener("input", (e) => {
+      this.dispatchEvent(
+        new CustomEvent(SearchBar.SEARCH_QUERY_CHANGED, {
+          detail: {
+            query: e.target.value,
+          },
+        })
+      );
+    });
 
     const button = document.createElement("button");
     button.setAttribute("class", "btn btn-secondary");

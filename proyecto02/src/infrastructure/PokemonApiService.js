@@ -50,6 +50,19 @@ export default class PokemonApiService extends PokemonService {
     );
   }
 
+  async findByName(name) {
+    if (_.isEmpty(name)) {
+      return await this.findAll();
+    }
+
+    return immutable.List(
+      filter(
+        ({ species }) => species.toString().includes(name.toLowerCase()),
+        [...this.#pokemonData.values()]
+      )
+    );
+  }
+
   async findByType([targetType1, targetType2]) {
     require(_.isString(
       targetType1,
