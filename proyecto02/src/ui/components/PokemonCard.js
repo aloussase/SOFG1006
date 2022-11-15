@@ -1,8 +1,11 @@
 import * as _ from "lodash";
+import StatsChart from "./StatsChart";
 
 export default class PokemonCard extends HTMLElement {
   #pkmn;
   #card;
+  #cardImage;
+  #statsChart;
 
   constructor(pkmn) {
     super();
@@ -11,11 +14,32 @@ export default class PokemonCard extends HTMLElement {
       throw Error(`Expected a valid pokemon, but got: ${pkmn}`);
     }
 
+    this.setAttribute("class", "pb-1 pe-1");
+
     this.#pkmn = pkmn;
 
-    this.setAttribute("class", "pb-1 pe-1");
     this.#card = this.#createCard();
+    this.#statsChart = this.#createStatsChart();
+
+    this.#card.addEventListener("mouseover", () =>
+      this.#cardImage.replaceWith(this.#statsChart)
+    );
+
+    this.#card.addEventListener("mouseout", () =>
+      this.#statsChart.replaceWith(this.#cardImage)
+    );
+
     this.appendChild(this.#card);
+  }
+
+  #createStatsChart() {
+    const stats = [...this.#pkmn.getStats()].map((stat) => stat.value);
+    const statsChart = new StatsChart({
+      stats,
+      height: this.#cardImage.height,
+      width: this.#cardImage.width,
+    });
+    return statsChart;
   }
 
   #createCard() {
@@ -26,6 +50,8 @@ export default class PokemonCard extends HTMLElement {
     img.setAttribute("class", "card-img-top img-fluid");
     img.alt = this.#pkmn.species;
     img.src = this.#pkmn.imageUrl;
+
+    this.#cardImage = img;
 
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");

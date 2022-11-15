@@ -1,5 +1,7 @@
 import * as _ from "lodash";
 
+import { STAT_NAMES } from "./common/constants.js";
+
 import IllegalArgumentException from "./common/IllegalArgumentException.js";
 
 class PokemonStat {
@@ -13,17 +15,8 @@ class PokemonStat {
   }
 }
 
-const statNames = [
-  "hp",
-  "attack",
-  "defense",
-  "special-attack",
-  "special-defense",
-  "speed",
-];
-
 export default function createStat(name, value) {
-  if (!_.some(statNames, (stat) => stat === name)) {
+  if (!STAT_NAMES.some((stat) => stat === name)) {
     throw new IllegalArgumentException(`Invalid stat name: ${name}`);
   }
 

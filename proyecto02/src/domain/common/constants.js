@@ -24,3 +24,12 @@ export const PKMN_TYPES = immutable.List.of(
   "steel",
   "fairy"
 );
+
+export const STAT_NAMES = immutable.List.of(
+  "hp",
+  "attack",
+  "defense",
+  "special-attack",
+  "special-defense",
+  "speed"
+);
