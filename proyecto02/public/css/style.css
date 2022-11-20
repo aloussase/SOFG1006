@@ -19,7 +19,7 @@
 }
 
 .type-fire {
-  background-color: red;
+  background-color: orange;
 }
 
 .type-water {
@@ -40,4 +40,44 @@
 
 .type-ice {
   background-color: silver;
+}
+
+.type-ground {
+  background-color: burlywood;
+}
+
+.type-steel {
+  background-color: slategrey;
+}
+
+.type-fightning {
+  background-color: red;
+}
+
+.type-ghost {
+  background-color: purple;
+}
+
+.type-fairy {
+  background-color: pink;
+}
+
+.type-electric {
+  background-color: yellow;
+}
+
+.type-dragon {
+  background-color: royalblue;
+}
+
+.type-rock {
+  background-color: brown;
+}
+
+.type-dark {
+  background-color: black;
+}
+
+.type-psychic {
+  background-color: fuchsia;
 }

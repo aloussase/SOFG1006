@@ -3,18 +3,27 @@ import * as _ from "lodash";
 import PokemonCard from "./PokemonCard";
 
 export default class PokemonGallery extends HTMLElement {
+  #root;
+
   constructor({ items }) {
     super();
 
-    const div = document.createElement("div");
-    div.setAttribute("class", "card-group justify-content-center");
+    this.#root = document.createElement("div");
+    this.#root.setAttribute("class", "card-group justify-content-center");
 
     // Pass through each pokemon to the card.
-    items
-      .map((item) => new PokemonCard(item))
-      .forEach((card) => div.appendChild(card));
+    this.setPokemonList(items);
 
-    this.appendChild(div);
+    this.appendChild(this.#root);
+  }
+
+  /**
+   * Set the list of pokemon displayed by the gallery.
+   */
+  setPokemonList(pokemonList) {
+    this.#root.replaceChildren(
+      ...pokemonList.map((pokemon) => new PokemonCard(pokemon))
+    );
   }
 }
 

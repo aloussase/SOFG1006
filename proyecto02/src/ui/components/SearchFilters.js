@@ -1,7 +1,6 @@
 import { PKMN_TYPES } from "../../domain/common/constants.js";
 
 import ComboBox from "./ComboBox";
-import CollapsingHeading from "./CollapsingHeading";
 
 export default class SearchFilters extends HTMLElement {
   static TYPE_FILTER_CHANGED = "type-filter-changed";
@@ -17,7 +16,10 @@ export default class SearchFilters extends HTMLElement {
     filters.setAttribute("class", "row");
 
     this.#type1Filter = this.#createTypeFilter("Tipo 1");
-    this.#type1Filter.setAttribute("class", "col");
+    this.#type1Filter.setAttribute(
+      "class",
+      "col d-flex align-items-center justify-content-center"
+    );
 
     this.#type2Filter = this.#createTypeFilter("Tipo 2");
     this.#type2Filter.setAttribute("class", "col");

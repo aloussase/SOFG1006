@@ -12,7 +12,10 @@ export default class ComboBox extends HTMLElement {
     super();
 
     const div = document.createElement("div");
-    div.setAttribute("class", "mb-3 d-flex align-items-center");
+    div.setAttribute(
+      "class",
+      "d-flex align-items-center justify-content-center"
+    );
 
     const label = document.createElement("label");
     label.setAttribute("for", name);

@@ -3,51 +3,35 @@ import PokemonApiService from "./infrastructure/PokemonApiService.js";
 // Used in index.html
 import AsyncPokemonFetcherSubject from "./infrastructure/AsyncPokemonFetcherSubject.js";
 import DismissableAlert from "./ui/components/DismissableAlert.js";
-import PokemonGallery from "./ui/components/PokemonGallery.js";
-import SearchFilters from "./ui/components/SearchFilters.js";
-import SearchBar from "./ui/components/SearchBar.js";
 
 import "./style.scss";
+import PokemonGalleryView from "./ui/views/PokemonGalleryView.js";
 
 class UI {
-  #gallery;
-  #pkmnService;
-  #searchFilters;
-  #searchBar;
+  #pokemonService;
+  #pokemonGalleryView;
+  #mainContainer;
 
   constructor() {
-    this.#gallery = document.getElementById("pkmn-gallery");
-    this.#searchFilters = document.getElementById("search-filters");
-    this.#searchBar = document.getElementById("search-bar");
+    this.#mainContainer = document.getElementById("main-container");
 
-    this.#pkmnService = new PokemonApiService();
+    this.#pokemonService = new PokemonApiService();
+    this.#pokemonGalleryView = new PokemonGalleryView(this.#pokemonService);
 
-    this.#searchFilters.addEventListener(
-      SearchFilters.TYPE_FILTER_CHANGED,
-      (e) => this.#applyEvent(e)
-    );
+    const showStatsBtn = document.getElementById("show-stats");
+    let showingStats = false;
 
-    this.#searchBar.addEventListener(SearchBar.SEARCH_QUERY_CHANGED, (e) =>
-      this.#applyEvent(e)
-    );
-  }
-
-  async #applyEvent({ type, detail: payload }) {
-    switch (type) {
-      case SearchFilters.TYPE_FILTER_CHANGED: {
-        const newPkmn = await this.#pkmnService.findByType([
-          payload.type1,
-          payload.type2,
-        ]);
-        this.#setPkmnList(newPkmn);
-        break;
+    showStatsBtn.addEventListener("click", () => {
+      if (showingStats) {
+        showStatsBtn.textContent = "Estadísticas";
+        this.#mainContainer.replaceChildren(this.#pokemonGalleryView);
+      } else {
+        showStatsBtn.textContent = "Pokémon";
+        this.#mainContainer.replaceChildren();
       }
-      case SearchBar.SEARCH_QUERY_CHANGED: {
-        const newPkmn = await this.#pkmnService.findByName(payload.query);
-        this.#setPkmnList(newPkmn);
-        break;
-      }
-    }
+
+      showingStats = !showingStats;
+    });
   }
 
   onNext(msg) {
@@ -61,23 +45,16 @@ class UI {
     );
   }
 
-  #setPkmnList(pkmn) {
-    this.#gallery.replaceChildren(
-      new PokemonGallery({
-        items: pkmn,
-      })
-    );
-  }
-
   async init() {
     AsyncPokemonFetcherSubject.subscribe(this);
-    AsyncPokemonFetcherSubject.subscribe(this.#pkmnService);
+    AsyncPokemonFetcherSubject.subscribe(this.#pokemonService);
     AsyncPokemonFetcherSubject.connect();
 
-    setTimeout(
-      async () => this.#setPkmnList(await this.#pkmnService.findAll()),
-      2000
-    );
+    this.#pokemonGalleryView
+      .init()
+      .then(() =>
+        this.#mainContainer.replaceChildren(this.#pokemonGalleryView)
+      );
   }
 }
 

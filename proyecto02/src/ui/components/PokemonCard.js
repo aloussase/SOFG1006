@@ -21,25 +21,23 @@ export default class PokemonCard extends HTMLElement {
     this.#card = this.#createCard();
     this.#statsChart = this.#createStatsChart();
 
-    this.#card.addEventListener("mouseover", () =>
+    this.appendChild(this.#card);
+
+    this.addEventListener("mouseover", () =>
       this.#cardImage.replaceWith(this.#statsChart)
     );
 
-    this.#card.addEventListener("mouseout", () =>
+    this.addEventListener("mouseout", () =>
       this.#statsChart.replaceWith(this.#cardImage)
     );
-
-    this.appendChild(this.#card);
   }
 
   #createStatsChart() {
-    const stats = [...this.#pkmn.getStats()].map((stat) => stat.value);
-    const statsChart = new StatsChart({
-      stats,
-      height: this.#cardImage.height,
-      width: this.#cardImage.width,
+    return new StatsChart({
+      stats: [...this.#pkmn.getStats()].map((stat) => stat.value),
+      height: 475,
+      width: 500,
     });
-    return statsChart;
   }
 
   #createCard() {
@@ -88,7 +86,7 @@ export default class PokemonCard extends HTMLElement {
       `badge rounded-pill type-${this.#pkmn.types.get(n)}`
     );
 
-    typeBadge.innerHTML = this.#pkmn.types.get(n);
+    typeBadge.textContent = this.#pkmn.types.get(n);
 
     return typeBadge;
   }
