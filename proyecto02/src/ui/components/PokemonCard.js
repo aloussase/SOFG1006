@@ -34,6 +34,7 @@ export default class PokemonCard extends HTMLElement {
 
   #createStatsChart() {
     return new StatsChart({
+      type: this.#pkmn.types.get(0).type,
       stats: [...this.#pkmn.getStats()].map((stat) => stat.value),
       height: 475,
       width: 500,

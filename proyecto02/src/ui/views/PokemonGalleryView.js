@@ -39,6 +39,7 @@ export default class PokemonGalleryView extends HTMLElement {
     this.#gallery = new PokemonGallery({ items: [] });
     galleryContainer.appendChild(this.#gallery);
 
+    this.setAttribute("class", "min-vh-100");
     this.append(searchBarContainer, galleryContainer);
   }
 
@@ -50,7 +51,7 @@ export default class PokemonGalleryView extends HTMLElement {
     );
   }
 
-  async #applyEvent({ type, payload }) {
+  async #applyEvent({ type, detail: payload }) {
     switch (type) {
       case SearchFilters.TYPE_FILTER_CHANGED: {
         const newPkmn = await this.#pokemonService.findByType([

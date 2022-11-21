@@ -1,3 +1,5 @@
+import { Chart, registerables } from "chart.js";
+
 import PokemonApiService from "./infrastructure/PokemonApiService.js";
 
 // Used in index.html
@@ -6,10 +8,12 @@ import DismissableAlert from "./ui/components/DismissableAlert.js";
 
 import "./style.scss";
 import PokemonGalleryView from "./ui/views/PokemonGalleryView.js";
+import StatsView from "./ui/views/StatsView.js";
 
 class UI {
   #pokemonService;
   #pokemonGalleryView;
+  #statsView;
   #mainContainer;
 
   constructor() {
@@ -17,6 +21,7 @@ class UI {
 
     this.#pokemonService = new PokemonApiService();
     this.#pokemonGalleryView = new PokemonGalleryView(this.#pokemonService);
+    this.#statsView = new StatsView(this.#pokemonService);
 
     const showStatsBtn = document.getElementById("show-stats");
     let showingStats = false;
@@ -27,7 +32,7 @@ class UI {
         this.#mainContainer.replaceChildren(this.#pokemonGalleryView);
       } else {
         showStatsBtn.textContent = "Pokémon";
-        this.#mainContainer.replaceChildren();
+        this.#mainContainer.replaceChildren(this.#statsView);
       }
 
       showingStats = !showingStats;
@@ -36,21 +41,26 @@ class UI {
 
   onNext(msg) {
     if (msg.event !== "completed") return;
+    this.#onDataLoadCompleted();
+  }
+
+  async #onDataLoadCompleted() {
+    await this.#statsView.init();
 
     const alertsContainer = document.getElementById("alerts-container");
     alertsContainer.replaceChildren(
       new DismissableAlert({
-        message: "Finished loading the Pokémon data",
+        message:
+          "Finished loading the Pokémon data. You may now see the statistics.",
       })
     );
   }
 
   async init() {
     AsyncPokemonFetcherSubject.subscribe(this);
-    AsyncPokemonFetcherSubject.subscribe(this.#pokemonService);
     AsyncPokemonFetcherSubject.connect();
 
-    this.#pokemonGalleryView
+    await this.#pokemonGalleryView
       .init()
       .then(() =>
         this.#mainContainer.replaceChildren(this.#pokemonGalleryView)
@@ -58,7 +68,7 @@ class UI {
   }
 }
 
-document.addEventListener(
-  "DOMContentLoaded",
-  async () => await new UI().init()
-);
+document.addEventListener("DOMContentLoaded", async () => {
+  Chart.register(...registerables);
+  await new UI().init();
+});

@@ -5,6 +5,7 @@ import { filter, map, pipe, range } from "rambda";
 import { PKMN_TOTAL } from "../domain/common/constants";
 import PokemonService from "../domain/PokemonService";
 import { require } from "../validation.js";
+import AsyncPokemonFetcherSubject from "./AsyncPokemonFetcherSubject";
 
 export default class PokemonApiService extends PokemonService {
   #pokemonData;
@@ -14,6 +15,8 @@ export default class PokemonApiService extends PokemonService {
 
     // Map from Pokémon id to their corresponding data.
     this.#pokemonData = new Map();
+
+    AsyncPokemonFetcherSubject.subscribe(this);
   }
 
   /**
