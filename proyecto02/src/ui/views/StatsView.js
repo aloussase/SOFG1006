@@ -65,6 +65,10 @@ export default class StatsView extends HTMLElement {
           },
         ],
       },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      },
     };
   }
 }
