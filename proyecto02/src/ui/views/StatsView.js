@@ -35,7 +35,7 @@ export default class StatsView extends HTMLElement {
     const chartContainer = document.createElement("div");
     chartContainer.setAttribute(
       "class",
-      "container-fluid min-vh-100 bg-white w-75 mx-auto shadow"
+      "min-vh-100 bg-white w-75 mx-auto shadow"
     );
 
     const canvas = document.createElement("canvas");
