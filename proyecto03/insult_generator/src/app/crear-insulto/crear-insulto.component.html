@@ -1,0 +1,51 @@
+<div
+  *ngIf="errorCrearInsultoVacio"
+  class="alert alert-danger alert-dismissable fade show"
+  role="alert"
+  (click)="errorCrearInsultoVacio = false"
+>
+  No se puede añadir un insulto vacio.
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+<div
+  *ngIf="insultoAnadido"
+  class="alert alert-success alert-dismissable fade show"
+  role="alert"
+  (click)="insultoAnadido = false"
+>
+  Insulto añadido a "Mis Insultos".
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <label for="new-insult" class="form-label card-title"
+        >Crear insulto</label
+      >
+      <input
+        [formControl]="newInsult"
+        type="text"
+        class="form-control form-control my-1"
+        id="new-insult"
+        placeholder="Tu mamá es más densa que una estrella de neutrones"
+      />
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        (click)="onCreateInsult()"
+      >
+        Crear
+      </button>
+    </div>
+  </div>
+</div>

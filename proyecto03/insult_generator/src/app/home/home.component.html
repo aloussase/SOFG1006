@@ -1,0 +1,66 @@
+<div
+  *ngIf="errorGeneratingInsult"
+  class="alert alert-danger alert-dismissible fade show"
+  role="alert"
+>
+  <strong>My my!</strong> There was a problem generating an insult.
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="close"
+    (click)="errorGeneratingInsult = false"
+  ></button>
+</div>
+<div
+  *ngIf="insultCopiedToClipboard"
+  class="alert alert-info alert-dismissible fade show"
+  role="alert"
+>
+  Insult copied to clipboard!
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="close"
+    (click)="insultCopiedToClipboard = false"
+  ></button>
+</div>
+<div id="home-component" class="container">
+  <div>
+    <h1 class="text-center display-5">Generate an Insult</h1>
+    <mat-card class="py-4">
+      <mat-card-header></mat-card-header>
+      <mat-card-content>
+        <input
+          type="text"
+          placeholder="Generate an insult..."
+          class="form-control overflow-scroll"
+          *ngIf="generatedInsult !== undefined; else placeHolderInsult"
+          [value]="generatedInsult.insult"
+        />
+        <ng-template #placeHolderInsult>
+          <input
+            type="text"
+            disabled
+            placeholder="Generate an insult..."
+            class="form-control"
+          />
+        </ng-template>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="accent" (click)="onGenerateInsult()">
+          New
+        </button>
+        <button mat-raised-button color="accent" (click)="onCopyToClipboard()">
+          <mat-icon>content_copy</mat-icon>
+          Copy
+        </button>
+        <button mat-raised-button color="accent" (click)="onStartInsult()">
+          <mat-icon>star_rate</mat-icon>
+          Star
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

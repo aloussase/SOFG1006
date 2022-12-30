@@ -1,0 +1,24 @@
+<ul class="list-group list-group-flush">
+  <li
+    class="list-group-item"
+    *ngFor="let insult of insultRepository.findAll() | async"
+  >
+    <div class="btn-toolbar justify-content-between" role="toolbar">
+      <div>
+        <span> {{ insult.insult }}</span>
+      </div>
+      <div class="btn-group" role="group">
+        <span>
+          <button mat-button (click)="onCopyToClipboard(insult.insult)">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        </span>
+        <span>
+          <button mat-button (click)="onDeleteInsult(insult.number)">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </span>
+      </div>
+    </div>
+  </li>
+</ul>
