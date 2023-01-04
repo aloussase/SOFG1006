@@ -1,3 +1,13 @@
+<app-alert
+  alertText="Insult copied to clipboard!"
+  alertType="success"
+  [alertShowing]="insultCopiedToClipboard"
+  (close)="insultCopiedToClipboard = false"
+>
+</app-alert>
+<div *ngIf="noInsults$ | async" class="text-center display-2 py-4">
+  Whoa! Such empty!
+</div>
 <ul class="list-group list-group-flush">
   <li
     class="list-group-item"

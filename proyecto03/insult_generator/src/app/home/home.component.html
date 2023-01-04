@@ -1,31 +1,24 @@
-<div
-  *ngIf="errorGeneratingInsult"
-  class="alert alert-danger alert-dismissible fade show"
-  role="alert"
+<app-alert
+  alertText="There was a problem generating an insult."
+  alertType="danger"
+  [alertShowing]="errorGeneratingInsult"
+  (close)="errorGeneratingInsult = false"
 >
-  <strong>My my!</strong> There was a problem generating an insult.
-  <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="alert"
-    aria-label="close"
-    (click)="errorGeneratingInsult = false"
-  ></button>
-</div>
-<div
-  *ngIf="insultCopiedToClipboard"
-  class="alert alert-info alert-dismissible fade show"
-  role="alert"
+</app-alert>
+<app-alert
+  alertText="Insult copied to clipboard!"
+  alertType="success"
+  [alertShowing]="insultCopiedToClipboard"
+  (close)="insultCopiedToClipboard = false"
 >
-  Insult copied to clipboard!
-  <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="alert"
-    aria-label="close"
-    (click)="insultCopiedToClipboard = false"
-  ></button>
-</div>
+</app-alert>
+<app-alert
+  alertText="Insult added to 'My Insults'"
+  alertType="info"
+  [alertShowing]="insultStarred"
+  (close)="insultStarred = false"
+>
+</app-alert>
 <div id="home-component" class="container">
   <div>
     <h1 class="text-center display-5">Generate an Insult</h1>

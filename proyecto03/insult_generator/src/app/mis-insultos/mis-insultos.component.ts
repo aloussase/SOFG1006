@@ -1,6 +1,9 @@
+import { Clipboard } from '@angular/cdk/clipboard';
+import { Observable } from 'rxjs';
+import { isEmpty, map } from 'rxjs/operators';
+
 import { Component } from '@angular/core';
 import { InsultRepository } from '../repositories/insult-repository';
-import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-mis-insultos',
@@ -8,14 +11,20 @@ import { Clipboard } from '@angular/cdk/clipboard';
   styleUrls: ['./mis-insultos.component.scss'],
 })
 export class MisInsultosComponent {
+  insultCopiedToClipboard = false;
+
+  noInsults$: Observable<boolean>;
+
   constructor(
     public insultRepository: InsultRepository,
     private clipboard: Clipboard
-  ) {}
+  ) {
+    this.noInsults$ = this.insultRepository.findAll().pipe(isEmpty());
+  }
 
   onCopyToClipboard(insult: string) {
-    // TODO: Notify the user the insult has been copied.
     this.clipboard.copy(insult);
+    this.insultCopiedToClipboard = true;
   }
 
   onDeleteInsult(insultId: string) {

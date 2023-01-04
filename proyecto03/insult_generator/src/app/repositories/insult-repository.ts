@@ -1,6 +1,6 @@
 import { EvilInsult } from '../interfaces/evil-insult';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class InsultRepository {
     for (const insult of this.insults.values()) {
       insults.push(insult);
     }
-    return of(insults);
+    return insults.length === 0 ? EMPTY : of(insults);
   }
 
   /**

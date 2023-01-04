@@ -28,4 +28,5 @@ app.get('/generate_insult', async (req, res) => {
 })
 
 const SERV_PORT = process.env.PORT || 8080;
+
 app.listen(SERV_PORT, () => console.log(`Server started on port ${SERV_PORT}`));

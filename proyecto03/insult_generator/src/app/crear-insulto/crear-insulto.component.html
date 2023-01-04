@@ -1,31 +1,17 @@
-<div
-  *ngIf="errorCrearInsultoVacio"
-  class="alert alert-danger alert-dismissable fade show"
-  role="alert"
-  (click)="errorCrearInsultoVacio = false"
+<app-alert
+  alertText="No se puede añadir un insulto vacio."
+  alertType="danger"
+  [alertShowing]="errorCrearInsultoVacio"
+  (close)="errorCrearInsultoVacio = false"
 >
-  No se puede añadir un insulto vacio.
-  <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="alert"
-    aria-label="Close"
-  ></button>
-</div>
-<div
-  *ngIf="insultoAnadido"
-  class="alert alert-success alert-dismissable fade show"
-  role="alert"
-  (click)="insultoAnadido = false"
+</app-alert>
+<app-alert
+  alertText="Insulto añadido a 'Mis Insultos'."
+  alertType="success"
+  [alertShowing]="insultoAnadido"
+  (close)="insultoAnadido = false"
 >
-  Insulto añadido a "Mis Insultos".
-  <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="alert"
-    aria-label="Close"
-  ></button>
-</div>
+</app-alert>
 <div class="container">
   <div class="card">
     <div class="card-body">

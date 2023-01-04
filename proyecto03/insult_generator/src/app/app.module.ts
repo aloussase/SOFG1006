@@ -18,6 +18,9 @@ import { MisInsultosComponent } from './mis-insultos/mis-insultos.component';
 import { CrearInsultoComponent } from './crear-insulto/crear-insulto.component';
 import { AcercaComponent } from './acerca/acerca.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     CrearInsultoComponent,
     AcercaComponent,
     NavbarComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,12 @@ import { NavbarComponent } from './navbar/navbar.component';
     ClipboardModule,
     FormsModule,
     ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
